@@ -9,37 +9,56 @@ public class TeleOp extends OpMode {
     Claw claw;
     Lift lift;
 
+    GamepadEx gp1;
+    GamepadEx gp2;
+
+    static class Buttons {
+        static final int liftManual = GamepadEx.DPAD_UP;
+        static final int liftPower = GamepadEx.LEFT_STICK_Y;
+        static final int liftDown = GamepadEx.A;
+        static final int liftLow = GamepadEx.B;
+        static final int liftMid = GamepadEx.X;
+        static final int liftHigh = GamepadEx.Y;
+
+        static final int claw = GamepadEx.LEFT_BUMPER;
+    }
+
     @Override
     public void init() {
         claw = new Claw(telemetry, hardwareMap);
         lift = new Lift(telemetry, hardwareMap);
         lift.setManual(true);
+
+        gp1 = new GamepadEx();
+        gp2 = new GamepadEx();
+
+        gp1.update(gamepad1);
+        gp2.update(gamepad2);
     }
 
     @Override
     public void loop() {
-        if (gamepad2.dpad_down) {
-            lift.setManual(false);
-        } else if (gamepad2.dpad_up) {
-            lift.setManual(true);
+        if (gp2.isPressed(Buttons.liftManual)) {
+            lift.toggleManual();
         }
 
-        if (gamepad2.a) {
+        if (gp2.isPressed(Buttons.liftDown)) {
             lift.goTo(Lift.POS_DOWN);
-        } else if (gamepad2.b) {
+        } else if (gp2.isPressed(Buttons.liftLow)) {
             lift.goTo(Lift.POS_LOW);
-        } else if (gamepad2.x) {
+        } else if (gp2.isPressed(Buttons.liftMid)) {
             lift.goTo(Lift.POS_MID);
-        } else if (gamepad2.y) {
+        } else if (gp2.isPressed(Buttons.liftHigh)) {
             lift.goTo(Lift.POS_HIGH);
         }
 
-        if (gamepad2.left_bumper) {
-            claw.goTo(Claw.POS_CLOSE);
-        } else if (gamepad2.right_bumper) {
-            claw.goTo(Claw.POS_OPEN);
+        if (gp2.justPressed(Buttons.claw)) {
+            claw.toggle();
         }
 
-        lift.update(gamepad2.left_stick_y);
+        lift.update(gp2.getValue(Buttons.liftPower));
+
+        gp1.update(gamepad1);
+        gp2.update(gamepad2);
     }
 }
