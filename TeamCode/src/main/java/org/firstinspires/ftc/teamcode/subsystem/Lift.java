@@ -7,8 +7,8 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.inchworm.PIDController;
 
 public class Lift {
-    static int currentPos;
-    static boolean manual;
+    private static int currentPos;
+    private static boolean manual;
 
     final public static int POS_HIGH = 0;
     final public static int POS_MID = 0;
@@ -16,11 +16,11 @@ public class Lift {
     final public static int POS_DOWN = 0;
     final public static int MAX_HEIGHT = 0;
 
-    PIDController pid;
-    DcMotor leftSlide;
-    DcMotor rightSlide;
+    private PIDController pid;
+    private DcMotor leftSlide;
+    private DcMotor rightSlide;
 
-    Telemetry telemetry;
+    private Telemetry telemetry;
 
     public Lift(Telemetry telemetry, HardwareMap hw) {
         pid = new PIDController(0, 0, 0, currentPos);
@@ -45,6 +45,10 @@ public class Lift {
     public void setManual(boolean manual) {
         Lift.manual = manual;
         pid.reset();
+    }
+
+    public void toggleManual() {
+        setManual(!Lift.manual);
     }
 
     public void update(double stickVal) {

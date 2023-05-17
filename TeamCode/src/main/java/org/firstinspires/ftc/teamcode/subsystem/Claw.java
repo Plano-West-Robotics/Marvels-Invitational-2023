@@ -9,15 +9,26 @@ public class Claw {
     public static final double POS_CLOSE = 0;
     public static final double POS_OPEN = 0;
 
-    Servo clawServo;
-    Telemetry telemetry;
+    private Servo clawServo;
+    private double target;
+    private Telemetry telemetry;
 
     public Claw(Telemetry telemetry, HardwareMap hw) {
         this.telemetry = telemetry;
         this.clawServo = hw.get(Servo.class, "clawServo");
+        target = POS_CLOSE;
     }
 
     public void goTo(double position) {
-        clawServo.setPosition(position);
+        target = position;
+        clawServo.setPosition(target);
+    }
+
+    public void toggle() {
+        if (target == Claw.POS_CLOSE) {
+            goTo(Claw.POS_OPEN);
+        } else if (target == Claw.POS_OPEN) {
+            goTo(Claw.POS_CLOSE);
+        }
     }
 }
