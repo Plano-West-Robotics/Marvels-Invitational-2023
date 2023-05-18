@@ -40,9 +40,7 @@ public class ArmTuner extends LinearOpMode {
                 controller.reset();
             }*/
 
-            if (gamepad1.x) {
-                lift.goTo(HEIGHT);
-            }
+            lift.goTo(HEIGHT);
 
             telemetry.addData("target", HEIGHT);
             //telemetry.addData("out", out);
