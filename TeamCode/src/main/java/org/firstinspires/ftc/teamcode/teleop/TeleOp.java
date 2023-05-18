@@ -26,7 +26,7 @@ public class TeleOp extends OpMode {
 
         static final int armPickup = GamepadEx.DPAD_DOWN;
         static final int armMid = GamepadEx.DPAD_RIGHT;
-        static final int armDrop = GamepadEx.DPAD_DOWN;
+        static final int armDrop = GamepadEx.DPAD_UP;
     }
 
     @Override
