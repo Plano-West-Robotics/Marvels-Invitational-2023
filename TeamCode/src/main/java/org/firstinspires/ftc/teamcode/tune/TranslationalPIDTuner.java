@@ -15,7 +15,7 @@ import org.firstinspires.ftc.teamcode.inchworm.units.Distance;
 
 @Autonomous(group="tune")
 public class TranslationalPIDTuner extends LinearOpMode {
-    public static final double MAX_VEL = 2000;
+    public static final double MAX_VEL = 1588.369225318531;
     /*
      * This class should be used to tune translational PID for InchWorm.
      * Requires a gamepad. Make sure to write down the tuned values, or they will be lost forever.

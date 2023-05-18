@@ -28,8 +28,8 @@ public class InchWorm {
     /** Global constant for hub orientation. Use this unless you need to override the orientation for one specific opmode.  */
     public static final RevHubOrientationOnRobot GLOBAL_ORIENTATION = new RevHubOrientationOnRobot(
             // TODO: change these if they are not accurate
-            RevHubOrientationOnRobot.LogoFacingDirection.FORWARD,
-            RevHubOrientationOnRobot.UsbFacingDirection.LEFT);
+            RevHubOrientationOnRobot.LogoFacingDirection.RIGHT,
+            RevHubOrientationOnRobot.UsbFacingDirection.BACKWARD);
 
 
     private final DcMotor fl;
@@ -43,12 +43,12 @@ public class InchWorm {
      * Maximum translational velocity in encoder ticks/second. Find this using the SpeedTuner
      */
     // TODO: tune this value
-    private static final double MAX_VEL = 2000;
+    private static final double MAX_VEL = 1588.369225318531;
     /**
      * Maximum angular velocity in degrees/second. Find this using the SpeedTuner.
      */
     // TODO: tune this value
-    private static final double MAX_ANG_VEL = -188;
+    private static final double MAX_ANG_VEL = 16;
     /**
      * PID controllers. <b>coefficients for controllerX and controllerY should be THE SAME!</b>
      * Tune controllerX and controllerY with the TranslationalPIDTuner, and tune controllerTheta with the TurnPIDTuner.

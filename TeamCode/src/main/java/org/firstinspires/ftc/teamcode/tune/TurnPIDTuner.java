@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.inchworm.PIDController;
 
 @Autonomous(group="tune")
 public class TurnPIDTuner extends LinearOpMode {
-    public static final double MAX_ANG_VEL = -188;
+    public static final double MAX_ANG_VEL = 16;
     /*
      * This class should be used to tune turn PID for InchWorm.
      * Requires a gamepad. Make sure to write down the tuned values, or they will be lost forever.
