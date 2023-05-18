@@ -2,18 +2,20 @@ package org.firstinspires.ftc.teamcode.teleop;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
+import org.firstinspires.ftc.teamcode.subsystem.Arm;
 import org.firstinspires.ftc.teamcode.subsystem.Claw;
 import org.firstinspires.ftc.teamcode.subsystem.Lift;
 
 public class TeleOp extends OpMode {
     Claw claw;
     Lift lift;
+    Arm arm;
 
     GamepadEx gp1;
     GamepadEx gp2;
 
     static class Buttons {
-        static final int liftManual = GamepadEx.DPAD_UP;
+        static final int liftManual = GamepadEx.RIGHT_BUMPER;
         static final int liftPower = GamepadEx.LEFT_STICK_Y;
         static final int liftDown = GamepadEx.A;
         static final int liftLow = GamepadEx.B;
@@ -21,12 +23,18 @@ public class TeleOp extends OpMode {
         static final int liftHigh = GamepadEx.Y;
 
         static final int claw = GamepadEx.LEFT_BUMPER;
+
+        static final int armPickup = GamepadEx.DPAD_DOWN;
+        static final int armMid = GamepadEx.DPAD_RIGHT;
+        static final int armDrop = GamepadEx.DPAD_DOWN;
     }
 
     @Override
     public void init() {
         claw = new Claw(telemetry, hardwareMap);
         lift = new Lift(telemetry, hardwareMap);
+        arm = new Arm(telemetry, hardwareMap);
+
         lift.setManual(true);
 
         gp1 = new GamepadEx();
@@ -54,6 +62,14 @@ public class TeleOp extends OpMode {
 
         if (gp2.justPressed(Buttons.claw)) {
             claw.toggle();
+        }
+
+        if (gp2.isPressed(Buttons.armPickup)) {
+            arm.goTo(Arm.POS_PICKUP);
+        } else if (gp2.isPressed(Buttons.armMid)) {
+            arm.goTo(Arm.POS_MID);
+        } else if (gp2.isPressed(Buttons.armDrop)) {
+            arm.goTo(Arm.POS_DROP);
         }
 
         lift.update(gp2.getValue(Buttons.liftPower));
