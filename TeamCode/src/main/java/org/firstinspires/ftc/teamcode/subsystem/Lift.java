@@ -7,7 +7,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.inchworm.PIDController;
 
 public class Lift {
-    private static int currentPos;
+    public static int currentPos;
     private static boolean manual;
 
     final public static int POS_HIGH = 0;
@@ -16,7 +16,7 @@ public class Lift {
     final public static int POS_DOWN = 0;
     final public static int MAX_HEIGHT = 0;
 
-    private PIDController pid;
+    public PIDController pid;
     private DcMotor leftSlide;
     private DcMotor rightSlide;
 

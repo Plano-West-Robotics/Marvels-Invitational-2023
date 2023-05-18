@@ -83,11 +83,10 @@ public class PIDController {
      * @param Kd     Derivative gain
      * @param target Target point to reach
      */
-    public void setParams(double Kp, double Ki, double Kd, double target) {
+    public void setParams(double Kp, double Ki, double Kd) {
         this.Kp = Kp;
         this.Ki = Ki;
         this.Kd = Kd;
-        this.target = target;
     }
 
     /**
