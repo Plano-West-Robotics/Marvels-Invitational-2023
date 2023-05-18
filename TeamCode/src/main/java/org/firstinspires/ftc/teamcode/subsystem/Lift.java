@@ -33,8 +33,8 @@ public class Lift {
     }
 
     void setPower(double power) {
-        leftSlide.setPower(power);
-        rightSlide.setPower(power);
+        leftSlide.setPower(Math.max(power, 0.5));
+        rightSlide.setPower(Math.max(power, 0.5));
     }
 
     public void goTo(int target) {
