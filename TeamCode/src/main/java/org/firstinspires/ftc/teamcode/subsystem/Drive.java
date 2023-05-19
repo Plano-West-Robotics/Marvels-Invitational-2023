@@ -6,29 +6,30 @@ import static java.lang.Math.sin;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.teamcode.inchworm.InchWorm;
 
 
 public class Drive {
     public DcMotorEx fl, bl, br, fr;
-    public BNO055IMU imu;
+    private final IMU imu;
     private final VoltageSensor vsensor;
     @Nullable
     private final Telemetry tm;
 
     public Drive(@NonNull HardwareMap hardwareMap, @Nullable Telemetry telemetry) {
-        fl = (DcMotorEx) hardwareMap.get("frontLeft");
-        bl = (DcMotorEx) hardwareMap.get("backLeft");
-        br = (DcMotorEx) hardwareMap.get("backRight");
-        fr = (DcMotorEx) hardwareMap.get("frontRight");
+        fl = hardwareMap.get(DcMotorEx.class, "frontLeft");
+        bl = hardwareMap.get(DcMotorEx.class, "backLeft");
+        br = hardwareMap.get(DcMotorEx.class, "backRight");
+        fr = hardwareMap.get(DcMotorEx.class, "frontRight");
         fr.setDirection(DcMotorSimple.Direction.REVERSE);
         br.setDirection(DcMotorSimple.Direction.REVERSE);
 
@@ -39,9 +40,8 @@ public class Drive {
             motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
 
-        imu = (BNO055IMU) hardwareMap.get(BNO055IMU.class, "imu");
-        imu.initialize(new BNO055IMU.Parameters());
-        yaw = imu.getAngularOrientation().thirdAngle;
+        imu = hardwareMap.get(IMU.class, "imu");
+        imu.initialize(new IMU.Parameters(InchWorm.GLOBAL_ORIENTATION));
 
         vsensor = hardwareMap.voltageSensor.iterator().next();
         voltage = vsensor.getVoltage();
@@ -72,84 +72,62 @@ public class Drive {
         return voltage;
     }
 
-    private double yaw;
     private double offset = 0;
 
+    /**
+     * Returns the current yaw
+     * @return Current yaw of the robot
+     */
     public double getYaw() {
-        return yaw - offset;
+        return getYaw(AngleUnit.RADIANS);
+    }
+
+    /**
+     * Returns the current yaw in the specified unit
+     * @param angleUnit Unit
+     * @return current yaw of the robot in the specified unit
+     */
+    public double getYaw(AngleUnit angleUnit) {
+        return imu.getRobotYawPitchRollAngles().getYaw(angleUnit) - offset;
     }
 
     public void resetYaw() {
         offset = getYaw();
     }
 
-    private final double[] powers = new double[]{0, 0, 0, 0};
+    /**
+     * Sets the velocity of the wheels
+     * @param x Strafe power
+     * @param y Forward power
+     * @param turn Turn power
+     * @param volComp Voltage compensation
+     */
+    public void setVels(double x, double y, double turn, double volComp) {
+        double rotX = x * cos(getYaw()) - y * sin(getYaw());
+        double rotY = x * sin(getYaw()) + y * cos(getYaw());
 
-    public void setPowers(@NonNull double[] powers) {
-        this.powers[0] = powers[0];
-        this.powers[1] = powers[1];
-        this.powers[2] = powers[2];
-        this.powers[3] = powers[3];
+        double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(turn), 1);
+        fl.setPower((rotY + rotX + turn) / denominator * speed * volComp);
+        bl.setPower((rotY - rotX + turn) / denominator * speed * volComp);
+        br.setPower((rotY + rotX - turn) / denominator * speed * volComp);
+        fr.setPower((rotY - rotX - turn) / denominator * speed * volComp);
     }
 
-    @NonNull
-    public double[] getPowers() {
-        return powers.clone();
-    }
-
-    public void setVels(double x, double y, double rx) {
-        final var rotX = x * cos(-getYaw()) - y * sin(-getYaw());
-        final var rotY = x * sin(-getYaw()) + y * cos(-getYaw());
-
-        double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
-        powers[0] = (rotY + rotX + rx) / denominator;
-        powers[1] = (rotY - rotX + rx) / denominator;
-        powers[2] = (rotY + rotX - rx) / denominator;
-        powers[3] = (rotY - rotX - rx) / denominator;
-    }
-    public void setVelsNew(double x, double y, double rx, int i){
-        final var rotX = x*cos(-getYaw()) - y*sin(-getYaw());
-        final var rotY = x*sin(-getYaw()) + y*cos(-getYaw());
-        double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
-        switch (i){
-            case 0: {
-                powers[i] = (rotY + rotX)/denominator;
-            }
-            break;
-            case 1: {
-                powers[i] = (rotY - rotX)/denominator;
-            }
-            break;
-            case 2: {
-                powers[i] = (rotY + rotX)/denominator;
-            }
-            break;
-            case 3: {
-                powers[i] = (rotY - rotX)/denominator;
-            }
-            break;
-            default: {
-                break;
-            }
-        }
-    }
-
-    public void update() {
-        yaw = AngleUnit.normalizeRadians(imu.getAngularOrientation().firstAngle - offset);
+    /**
+     * Update drive velocities
+     * @param x Strafe power
+     * @param y Forward power
+     * @param turn Turning power
+     */
+    public void update(double x, double y, double turn) {
         voltage = vsensor.getVoltage();
 
-        final double velComp = 12 / getVoltage();
+        double volComp = 12 / getVoltage();
 
-        fl.setPower(powers[0] * speed * velComp);
-        bl.setPower(powers[1] * speed * velComp);
-        br.setPower(powers[2] * speed * velComp);
-        fr.setPower(powers[3] * speed * velComp);
+        setVels(x, y, turn, volComp);
 
         if (tm != null) {
-            tm.addData("yaw", Math.toDegrees(getYaw()));
-            tm.addData("firstAngle", Math.toDegrees(imu.getAngularOrientation().firstAngle));
-            tm.addData("secondsAngle", Math.toDegrees(imu.getAngularOrientation().secondAngle));
-            tm.addData("thirdAngle", Math.toDegrees(imu.getAngularOrientation().thirdAngle));
+            tm.addData("yaw", getYaw(AngleUnit.DEGREES));
         }
     }
 }
