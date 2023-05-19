@@ -75,5 +75,9 @@ public class Lift {
         }
 
         currentPos = leftSlide.getCurrentPosition();
+
+        telemetry.addData("Slide Manual?", manual);
+        telemetry.addData("Slide Power", power);
+        telemetry.update();
     }
 }
