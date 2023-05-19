@@ -32,7 +32,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.ArrayList;
 
-@TeleOp
+
 public class SleeveDetector {
     OpenCvCamera camera;
     AprilTagDetectionPipeline aprilTagDetectionPipeline;
