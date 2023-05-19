@@ -39,7 +39,6 @@ public class Lift {
 
     public void goTo(int target) {
         pid.setTarget(target);
-        pid.reset();
     }
 
     public void setManual(boolean manual) {
