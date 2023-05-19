@@ -12,13 +12,18 @@ public class Lift {
     public static int currentPos;
     private static boolean manual;
 
-    final public static int POS_HIGH = 0;
-    final public static int POS_MID = 0;
-    final public static int POS_LOW = 0;
+    final public static int POS_HIGH = 1000;
+    final public static int POS_MID = 500;
+    final public static int POS_LOW = 250;
     final public static int POS_DOWN = 0;
     final public static int MAX_HEIGHT = 0;
 
-    public static final double MAX_VEL = 134.75; // TODO: tune this;
+    public final double Kp = 1;
+    public final double Ki = 0.15;
+    public final double Kd = 0.1;
+    public final double F = 0.01;
+
+    public static final double MAX_VEL = 134.75;
     public double power;
 
     public PIDController pid;
@@ -28,7 +33,7 @@ public class Lift {
     private Telemetry telemetry;
 
     public Lift(Telemetry telemetry, HardwareMap hw) {
-        pid = new PIDController(1, 0.15, 0.1, currentPos);
+        pid = new PIDController(Kp, Ki, Kd, currentPos);
         pid.setTarget(currentPos);
 
         leftSlide = hw.get(DcMotor.class, "leftSlide");
@@ -44,8 +49,8 @@ public class Lift {
 
     void setPower(double power) {
         power /= MAX_VEL;
-        leftSlide.setPower(Range.clip(power, -1, 1));
-        rightSlide.setPower(Range.clip(power, -1, 1));
+        leftSlide.setPower(Range.clip(power, -1, 1) + F);
+        rightSlide.setPower(Range.clip(power, -1, 1) + F);
     }
 
     public void goTo(int target) {
