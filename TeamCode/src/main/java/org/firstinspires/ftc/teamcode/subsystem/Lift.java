@@ -18,7 +18,7 @@ public class Lift {
     final public static int POS_DOWN = 0;
     final public static int MAX_HEIGHT = 0;
 
-    public static final double MAX_VEL = 2000; // TODO: tune this;
+    public static final double MAX_VEL = 134.75; // TODO: tune this;
     public double power;
 
     public PIDController pid;
@@ -28,7 +28,7 @@ public class Lift {
     private Telemetry telemetry;
 
     public Lift(Telemetry telemetry, HardwareMap hw) {
-        pid = new PIDController(0, 0, 0, currentPos);
+        pid = new PIDController(1, 0.15, 0.1, currentPos);
         pid.setTarget(currentPos);
 
         leftSlide = hw.get(DcMotor.class, "leftSlide");

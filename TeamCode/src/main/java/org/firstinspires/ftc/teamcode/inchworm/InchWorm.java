@@ -43,7 +43,7 @@ public class InchWorm {
      * Maximum translational velocity in encoder ticks/second. Find this using the SpeedTuner
      */
     // TODO: tune this value
-    private static final double MAX_VEL = 1588.369225318531;
+    private static final double MAX_VEL = 1636.1808821312072;
     /**
      * Maximum angular velocity in degrees/second. Find this using the SpeedTuner.
      */
