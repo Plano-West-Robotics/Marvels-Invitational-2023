@@ -30,7 +30,7 @@ public class ArmTuner extends LinearOpMode {
 
         FtcDashboard dashboard = FtcDashboard.getInstance();
         telemetry = dashboard.getTelemetry();
-
+        waitForStart();
         while (opModeIsActive()) {
             //double current = inchWorm.tracker.currentPos.theta.angleInDegrees();
             int current = Lift.currentPos;
@@ -49,6 +49,7 @@ public class ArmTuner extends LinearOpMode {
             telemetry.addData("Kp", String.format("%.2f", Kp));
             telemetry.addData("Ki", String.format("%.2f", Ki));
             telemetry.addData("Kd", String.format("%.2f", Kd));
+            telemetry.addData("Power", String.format("%.2f", lift.power));
             telemetry.update();
 
             lift.update(gamepad1.left_stick_y);

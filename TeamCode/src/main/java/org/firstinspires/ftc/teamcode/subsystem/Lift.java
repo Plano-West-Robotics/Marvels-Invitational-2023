@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.subsystem;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -15,6 +16,7 @@ public class Lift {
     final public static int POS_LOW = 0;
     final public static int POS_DOWN = 0;
     final public static int MAX_HEIGHT = 0;
+    public double power;
 
     public PIDController pid;
     private DcMotor leftSlide;
@@ -28,13 +30,16 @@ public class Lift {
 
         leftSlide = hw.get(DcMotor.class, "leftSlide");
         rightSlide = hw.get(DcMotor.class, "rightSlide");
-
+        //rightSlide.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftSlide.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftSlide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        leftSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         this.telemetry = telemetry;
     }
 
     void setPower(double power) {
         leftSlide.setPower(Math.max(power, 0.5));
-        rightSlide.setPower(Math.max(power, 0.5));
+        //rightSlide.setPower(Math.max(power, 0.5));
     }
 
     public void goTo(int target) {
@@ -54,7 +59,8 @@ public class Lift {
         if (Lift.manual) {
             setPower(stickVal);
         } else {
-            setPower(pid.calculate(currentPos));
+            power = pid.calculate(currentPos);
+            setPower(power);
         }
 
         currentPos = leftSlide.getCurrentPosition();

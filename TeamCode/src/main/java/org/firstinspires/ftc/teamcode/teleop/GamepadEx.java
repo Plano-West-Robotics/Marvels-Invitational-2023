@@ -1,7 +1,8 @@
 package org.firstinspires.ftc.teamcode.teleop;
 
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Gamepad;
-
+@TeleOp
 public class GamepadEx {
     private Gamepad prevGamepad;
     private Gamepad curGamepad;
