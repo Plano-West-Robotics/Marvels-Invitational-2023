@@ -44,8 +44,8 @@ public class ArmTuner extends LinearOpMode {
 
             telemetry.addData("target", HEIGHT);
             //telemetry.addData("out", out);
-            telemetry.addData("error", String.format("%.2f", HEIGHT - current));
-            telemetry.addData("current", String.format("%.2f", current));
+            telemetry.addData("error", String.format("%.2f", (double)HEIGHT - (double)current));
+            telemetry.addData("current", String.format("%.2f", (double)current));
             telemetry.addData("Kp", String.format("%.2f", Kp));
             telemetry.addData("Ki", String.format("%.2f", Ki));
             telemetry.addData("Kd", String.format("%.2f", Kd));
