@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.subsystem;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.inchworm.PIDController;
@@ -16,6 +17,8 @@ public class Lift {
     final public static int POS_LOW = 0;
     final public static int POS_DOWN = 0;
     final public static int MAX_HEIGHT = 0;
+
+    public static final double MAX_VEL = 2000; // TODO: tune this;
     public double power;
 
     public PIDController pid;
@@ -34,12 +37,15 @@ public class Lift {
         leftSlide.setDirection(DcMotorSimple.Direction.REVERSE);
         leftSlide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         leftSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightSlide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         this.telemetry = telemetry;
     }
 
     void setPower(double power) {
-        leftSlide.setPower(Math.max(power, 0.5));
-        //rightSlide.setPower(Math.max(power, 0.5));
+        power /= MAX_VEL;
+        leftSlide.setPower(Range.clip(power, -1, 1));
+        rightSlide.setPower(Range.clip(power, -1, 1));
     }
 
     public void goTo(int target) {
