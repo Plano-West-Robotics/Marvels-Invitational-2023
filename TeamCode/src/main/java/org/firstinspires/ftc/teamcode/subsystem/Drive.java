@@ -103,14 +103,24 @@ public class Drive {
      * @param volComp Voltage compensation
      */
     public void setVels(double x, double y, double turn, double volComp) {
-        double rotX = x * cos(getYaw()) - y * sin(getYaw());
-        double rotY = x * sin(getYaw()) + y * cos(getYaw());
+        double powerX = x * Math.cos(getYaw()) - y * Math.sin(getYaw());
+        double powerY = x * Math.sin(getYaw()) + y * Math.cos(getYaw());
 
-        double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(turn), 1);
-        fl.setPower((rotY + rotX + turn) / denominator * speed * volComp);
-        bl.setPower((rotY - rotX + turn) / denominator * speed * volComp);
-        br.setPower((rotY + rotX - turn) / denominator * speed * volComp);
-        fr.setPower((rotY - rotX - turn) / denominator * speed * volComp);
+        double flPower = (powerY - powerX + turn) * speed;
+        double frPower = (powerY + powerX - turn) * speed;
+        double blPower = (powerY + powerX + turn) * speed;
+        double brPower = (powerY - powerX - turn) * speed;
+
+        double scale = Math.max(1, (Math.abs(powerY) + Math.abs(turn) + Math.abs(powerX)) * Math.abs(speed)); // shortcut for max(abs([fl,fr,bl,br]))
+        flPower /= scale;
+        frPower /= scale;
+        blPower /= scale;
+        brPower /= scale;
+
+        fl.setPower(flPower * volComp);
+        fr.setPower(frPower * volComp);
+        bl.setPower(blPower * volComp);
+        br.setPower(brPower * volComp);
     }
 
     /**
