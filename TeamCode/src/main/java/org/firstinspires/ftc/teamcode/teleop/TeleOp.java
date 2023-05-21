@@ -5,12 +5,13 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import org.firstinspires.ftc.teamcode.subsystem.Arm;
 import org.firstinspires.ftc.teamcode.subsystem.Claw;
 import org.firstinspires.ftc.teamcode.subsystem.Drive;
+import org.firstinspires.ftc.teamcode.subsystem.DriveBasic;
 import org.firstinspires.ftc.teamcode.subsystem.Lift;
 @com.qualcomm.robotcore.eventloop.opmode.TeleOp
 public class TeleOp extends OpMode {
     Claw claw;
     Lift lift;
-    Drive drive;
+    DriveBasic drive;
     Arm arm;
 
     GamepadEx gp1;
@@ -39,7 +40,7 @@ public class TeleOp extends OpMode {
     public void init() {
         //claw = new Claw(telemetry, hardwareMap);
         lift = new Lift(telemetry, hardwareMap);
-        drive = new Drive(hardwareMap, telemetry);
+        drive = new DriveBasic(telemetry, hardwareMap);
         //arm = new Arm(telemetry, hardwareMap);
 
         lift.setManual(true);
@@ -80,7 +81,7 @@ public class TeleOp extends OpMode {
         } */
 
         lift.update(gp2.getValue(Buttons.liftPower));
-        //drive.update(-gp1.getValue(Buttons.driveX), gp1.getValue(Buttons.driveY), -gp1.getValue(Buttons.driveTheta));
+        drive.update(gp1.getValue(Buttons.driveX), -gp1.getValue(Buttons.driveY), gp1.getValue(Buttons.driveTheta));
         telemetry.addData("Joystick", gp2.getValue(Buttons.liftPower));
         telemetry.update();
 
