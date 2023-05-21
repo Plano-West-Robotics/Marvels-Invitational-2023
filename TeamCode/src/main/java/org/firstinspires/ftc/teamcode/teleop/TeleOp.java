@@ -80,7 +80,7 @@ public class TeleOp extends OpMode {
         } */
 
         lift.update(gp2.getValue(Buttons.liftPower));
-        drive.update(-gp1.getValue(Buttons.driveX), gp1.getValue(Buttons.driveY), -gp1.getValue(Buttons.driveTheta));
+        //drive.update(-gp1.getValue(Buttons.driveX), gp1.getValue(Buttons.driveY), -gp1.getValue(Buttons.driveTheta));
         telemetry.addData("Joystick", gp2.getValue(Buttons.liftPower));
         telemetry.update();
 
