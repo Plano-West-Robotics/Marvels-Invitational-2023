@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.subsystem;
 
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 
@@ -24,6 +25,9 @@ public class DriveBasic {
         this.bl = hardwareMap.get(DcMotor.class, "rearLeft");
         this.br = hardwareMap.get(DcMotor.class, "backRight");
         this.imu = hardwareMap.get(IMU.class, "imu");
+
+        this.fr.setDirection(DcMotorSimple.Direction.REVERSE);
+        this.br.setDirection(DcMotorSimple.Direction.REVERSE);
 
         this.telemetry = telemetry;
 
