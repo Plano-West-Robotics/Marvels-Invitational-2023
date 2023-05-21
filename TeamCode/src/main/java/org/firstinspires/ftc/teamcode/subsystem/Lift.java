@@ -15,8 +15,10 @@ public class Lift {
     final public static int POS_HIGH = -3010;
     final public static int POS_MID = -2000;
     final public static int POS_LOW = -1350;
-    final public static int POS_DOWN = 20;
+    final public static int POS_DOWN = -5;
     final public static int MAX_HEIGHT = 100;
+
+    final public static int DEADZONE = 10;
 
     public final double Kp = 5;
     public final double Ki = 0.02;
@@ -29,6 +31,7 @@ public class Lift {
     public PIDController pid;
     private DcMotor leftSlide;
     private DcMotor rightSlide;
+    private double target;
 
     private Telemetry telemetry;
 
@@ -49,6 +52,12 @@ public class Lift {
 
     void setPower(double power) {
         power /= MAX_VEL;
+
+        if (Math.abs(target - currentPos) <= DEADZONE && currentPos <= DEADZONE) {
+            leftSlide.setPower(0);
+            rightSlide.setPower(0);
+            return;
+        }
         leftSlide.setPower(Range.clip(power, -1, 1) + F);
         rightSlide.setPower(Range.clip(power, -1, 1) + F);
     }
@@ -59,6 +68,7 @@ public class Lift {
     }
 
     public void goTo(int target) {
+        this.target = target;
         pid.setTarget(target);
     }
 
