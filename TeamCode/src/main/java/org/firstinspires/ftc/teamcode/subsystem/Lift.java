@@ -19,7 +19,7 @@ public class Lift {
     final public static int MAX_HEIGHT = 100;
 
     public final double Kp = 5;
-    public final double Ki = 0.01;
+    public final double Ki = 0.02;
     public final double Kd = 0.12;
     public final double F = 0.1;
 
