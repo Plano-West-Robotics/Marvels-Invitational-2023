@@ -23,7 +23,7 @@ public class DriveBasic {
         this.fl = hardwareMap.get(DcMotor.class, "frontLeft");
         this.fr = hardwareMap.get(DcMotor.class, "frontRight");
         this.bl = hardwareMap.get(DcMotor.class, "rearLeft");
-        this.br = hardwareMap.get(DcMotor.class, "backRight");
+        this.br = hardwareMap.get(DcMotor.class, "rearRight");
         this.imu = hardwareMap.get(IMU.class, "imu");
 
         this.fr.setDirection(DcMotorSimple.Direction.REVERSE);
