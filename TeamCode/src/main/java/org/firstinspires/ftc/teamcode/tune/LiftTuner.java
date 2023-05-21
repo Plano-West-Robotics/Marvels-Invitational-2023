@@ -5,19 +5,16 @@ import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.teamcode.inchworm.WormUtil;
-import org.firstinspires.ftc.teamcode.inchworm.InchWorm;
-import org.firstinspires.ftc.teamcode.inchworm.PIDController;
 import org.firstinspires.ftc.teamcode.subsystem.Lift;
 
 @Config
 @Autonomous(group="tune")
-public class ArmTuner extends LinearOpMode {
+public class LiftTuner extends LinearOpMode {
     public static final double MAX_ANG_VEL = -188;
     public static int HEIGHT = 10;
     public static double Kp = 0;
-    public static double Ki = 0;
     public static double Kd = 0;
+    public static double Ki = 0;
     /*
      * This class should be used to tune turn PID for InchWorm.
      * Requires a gamepad. Make sure to write down the tuned values, or they will be lost forever.
@@ -28,8 +25,13 @@ public class ArmTuner extends LinearOpMode {
         Lift lift = new Lift(telemetry, hardwareMap);
         lift.setManual(false);
 
+        Kp = lift.Kp;
+        Ki = lift.Ki;
+        Kd = lift.Kd;
+
         FtcDashboard dashboard = FtcDashboard.getInstance();
         telemetry = dashboard.getTelemetry();
+
         waitForStart();
         while (opModeIsActive()) {
             //double current = inchWorm.tracker.currentPos.theta.angleInDegrees();
