@@ -27,8 +27,8 @@ public class Drive {
 
     public Drive(@NonNull HardwareMap hardwareMap, @Nullable Telemetry telemetry) {
         fl = hardwareMap.get(DcMotorEx.class, "frontLeft");
-        bl = hardwareMap.get(DcMotorEx.class, "backLeft");
-        br = hardwareMap.get(DcMotorEx.class, "backRight");
+        bl = hardwareMap.get(DcMotorEx.class, "rearLeft");
+        br = hardwareMap.get(DcMotorEx.class, "rearRight");
         fr = hardwareMap.get(DcMotorEx.class, "frontRight");
         fr.setDirection(DcMotorSimple.Direction.REVERSE);
         br.setDirection(DcMotorSimple.Direction.REVERSE);

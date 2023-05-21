@@ -28,7 +28,7 @@ public class InchWorm {
     /** Global constant for hub orientation. Use this unless you need to override the orientation for one specific opmode.  */
     public static final RevHubOrientationOnRobot GLOBAL_ORIENTATION = new RevHubOrientationOnRobot(
             // TODO: change these if they are not accurate
-            RevHubOrientationOnRobot.LogoFacingDirection.RIGHT,
+            RevHubOrientationOnRobot.LogoFacingDirection.LEFT,
             RevHubOrientationOnRobot.UsbFacingDirection.BACKWARD);
 
 

@@ -12,16 +12,16 @@ public class Lift {
     public static int currentPos;
     private static boolean manual;
 
-    final public static int POS_HIGH = 1000;
-    final public static int POS_MID = 500;
-    final public static int POS_LOW = 250;
-    final public static int POS_DOWN = 0;
-    final public static int MAX_HEIGHT = 0;
+    final public static int POS_HIGH = -3010;
+    final public static int POS_MID = -2000;
+    final public static int POS_LOW = -1350;
+    final public static int POS_DOWN = 20;
+    final public static int MAX_HEIGHT = 100;
 
-    public final double Kp = 1;
-    public final double Ki = 0.15;
-    public final double Kd = 0.1;
-    public final double F = 0.01;
+    public final double Kp = 5;
+    public final double Ki = 0.12;
+    public final double Kd = 0.01;
+    public final double F = 0.4;
 
     public static final double MAX_VEL = 134.75;
     public double power;
@@ -53,6 +53,11 @@ public class Lift {
         rightSlide.setPower(Range.clip(power, -1, 1) + F);
     }
 
+    void setRawPower(double power) {
+        leftSlide.setPower(power);
+        rightSlide.setPower(power);
+    }
+
     public void goTo(int target) {
         pid.setTarget(target);
     }
@@ -66,9 +71,9 @@ public class Lift {
         setManual(!Lift.manual);
     }
 
-    public void update(double stickVal) {
+    public void update(float stickVal) {
         if (Lift.manual) {
-            setPower(stickVal);
+            setRawPower(stickVal);
         } else {
             power = pid.calculate(currentPos);
             setPower(power);
@@ -78,6 +83,8 @@ public class Lift {
 
         telemetry.addData("Slide Manual?", manual);
         telemetry.addData("Slide Power", power);
+        telemetry.addData("Joystick", stickVal);
+        telemetry.addData("Position", currentPos);
         telemetry.update();
     }
 }
