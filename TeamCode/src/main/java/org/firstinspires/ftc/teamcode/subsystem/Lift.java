@@ -22,7 +22,7 @@ public class Lift {
 
     public final double Kp = 5;
     public final double Ki = 0.02;
-    public final double Kd = 0.12;
+    public final double Kd = 0.1;
     public final double F = 0.1;
 
     public static final double MAX_VEL = 134.75;
@@ -53,7 +53,7 @@ public class Lift {
     void setPower(double power) {
         power /= MAX_VEL;
 
-        if (Math.abs(target - currentPos) <= DEADZONE && currentPos <= DEADZONE) {
+        if (Math.abs(target - currentPos) <= DEADZONE && Math.abs(currentPos) <= DEADZONE) {
             leftSlide.setPower(0);
             rightSlide.setPower(0);
             return;
