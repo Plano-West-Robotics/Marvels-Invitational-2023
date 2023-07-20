@@ -40,8 +40,8 @@ public class Arm {
     };
 
     public Arm(Telemetry telemetry, HardwareMap hw) {
-        leftServo = hw.get(Servo.class, "armLeftServo");
-        rightServo = hw.get(Servo.class, "armRightServo");
+        leftServo = hw.get(Servo.class, "leftServo");
+        rightServo = hw.get(Servo.class, "rightServo");
         wristServo = hw.get(Servo.class, "wristServo");
         this.telemetry = telemetry;
     }

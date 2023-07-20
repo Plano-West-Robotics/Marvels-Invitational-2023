@@ -43,12 +43,12 @@ public class InchWorm {
      * Maximum translational velocity in encoder ticks/second. Find this using the SpeedTuner
      */
     // TODO: tune this value
-    private static final double MAX_VEL = 1636.1808821312072;
+    private static final double MAX_VEL = 1858.0855203;
     /**
      * Maximum angular velocity in degrees/second. Find this using the SpeedTuner.
      */
     // TODO: tune this value
-    private static final double MAX_ANG_VEL = 16;
+    private static final double MAX_ANG_VEL = 235.30882;
     /**
      * PID controllers. <b>coefficients for controllerX and controllerY should be THE SAME!</b>
      * Tune controllerX and controllerY with the TranslationalPIDTuner, and tune controllerTheta with the TurnPIDTuner.

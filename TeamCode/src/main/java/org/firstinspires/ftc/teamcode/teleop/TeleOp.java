@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.subsystem.Lift;
 public class TeleOp extends OpMode {
     Claw claw;
     Lift lift;
-    DriveBasic drive;
+    Drive drive;
     Arm arm;
 
     GamepadEx gp1;
@@ -25,23 +25,25 @@ public class TeleOp extends OpMode {
         static final int liftMid = GamepadEx.X;
         static final int liftHigh = GamepadEx.Y;
 
-        //static final int claw = GamepadEx.LEFT_BUMPER;
+        static final int claw = GamepadEx.LEFT_BUMPER;
 
-        //static final int armPickup = GamepadEx.DPAD_DOWN;
-        //static final int armMid = GamepadEx.DPAD_RIGHT;
-        //static final int armDrop = GamepadEx.DPAD_UP;
+        static final int armPickup = GamepadEx.DPAD_DOWN;
+        static final int armMid = GamepadEx.DPAD_RIGHT;
+        static final int armDrop = GamepadEx.DPAD_UP;
 
         static final int driveX = GamepadEx.LEFT_STICK_X;
         static final int driveY = GamepadEx.LEFT_STICK_Y;
         static final int driveTheta = GamepadEx.RIGHT_STICK_X;
+
+        static final int claw1 = GamepadEx.RIGHT_BUMPER;
     }
 
     @Override
     public void init() {
-        //claw = new Claw(telemetry, hardwareMap);
+        claw = new Claw(telemetry, hardwareMap);
         lift = new Lift(telemetry, hardwareMap);
-        drive = new DriveBasic(telemetry, hardwareMap);
-        //arm = new Arm(telemetry, hardwareMap);
+        drive = new Drive(hardwareMap, telemetry);
+        arm = new Arm(telemetry, hardwareMap);
 
         lift.setManual(true);
 
@@ -68,8 +70,10 @@ public class TeleOp extends OpMode {
             lift.goTo(Lift.POS_HIGH);
         }
 
-        /* if (gp2.justPressed(Buttons.claw)) {
-            claw.toggle();
+        if (gp2.isPressed(Buttons.claw1)) {
+            claw.goTo(Claw.POS_CLOSE);
+        } else if (gp2.isPressed(Buttons.claw)){
+            claw.goTo(Claw.POS_OPEN);
         }
 
         if (gp2.isPressed(Buttons.armPickup)) {
@@ -78,10 +82,10 @@ public class TeleOp extends OpMode {
             arm.goTo(Arm.POS_MID);
         } else if (gp2.isPressed(Buttons.armDrop)) {
             arm.goTo(Arm.POS_DROP);
-        } */
+        }
 
         lift.update(gp2.getValue(Buttons.liftPower));
-        drive.update(-gp1.getValue(Buttons.driveX), gp1.getValue(Buttons.driveY), -gp1.getValue(Buttons.driveTheta));
+        drive.update(gp1.getValue(Buttons.driveX), gp1.getValue(Buttons.driveY), -gp1.getValue(Buttons.driveTheta));
         telemetry.addData("Joystick", gp2.getValue(Buttons.liftPower));
         telemetry.update();
 

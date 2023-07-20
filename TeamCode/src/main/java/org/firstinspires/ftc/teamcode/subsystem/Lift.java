@@ -84,9 +84,6 @@ public class Lift {
     public void update(float stickVal) {
         if (Lift.manual) {
             setRawPower(stickVal);
-        } else {
-            power = pid.calculate(currentPos);
-            setPower(power);
         }
 
         currentPos = leftSlide.getCurrentPosition();

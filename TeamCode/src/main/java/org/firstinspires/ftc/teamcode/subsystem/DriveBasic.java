@@ -54,9 +54,9 @@ public class DriveBasic {
         double frontRightPower = (rotY - rotX - rx) / denominator;
         double backRightPower = (rotY + rotX - rx) / denominator;
 
-        fl.setPower(frontLeftPower);
-        bl.setPower(backLeftPower);
-        fr.setPower(frontRightPower);
-        br.setPower(backRightPower);
+        fl.setPower(frontLeftPower * 0.5);
+        bl.setPower(backLeftPower * 0.5);
+        fr.setPower(frontRightPower * 0.5);
+        br.setPower(backRightPower * 0.5);
     }
 }
