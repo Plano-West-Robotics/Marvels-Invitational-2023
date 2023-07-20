@@ -82,9 +82,7 @@ public class Lift {
     }
 
     public void update(float stickVal) {
-        if (Lift.manual) {
             setRawPower(stickVal);
-        }
 
         currentPos = leftSlide.getCurrentPosition();
 
@@ -92,6 +90,5 @@ public class Lift {
         telemetry.addData("Slide Power", power);
         telemetry.addData("Joystick", stickVal);
         telemetry.addData("Position", currentPos);
-        telemetry.update();
     }
 }

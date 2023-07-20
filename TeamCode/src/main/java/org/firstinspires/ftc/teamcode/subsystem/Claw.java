@@ -6,8 +6,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class Claw {
-    public static final double POS_CLOSE = -0.5;
-    public static final double POS_OPEN = 1;
+    public static final double POS_OPEN = 0;
+    public static final double POS_CLOSE = 1;
 
     private Servo clawServo;
     private double target;
@@ -23,7 +23,6 @@ public class Claw {
         target = position;
         clawServo.setPosition(target);
         telemetry.addData("Claw position:", position);
-        telemetry.update();
     }
 
     public void toggle() {

@@ -81,6 +81,10 @@ public class GamepadEx {
         return (!isPressed(button, prevGamepad) && isPressed(button, curGamepad));
     }
 
+    public boolean justReleased(int button) {
+        return (isPressed(button, prevGamepad) && !isPressed(button, curGamepad));
+    }
+
     public void update(Gamepad gamepad) {
         try {
             prevGamepad.copy(curGamepad);

@@ -15,27 +15,19 @@ public class Arm {
 
     Telemetry telemetry;
 
-    public static final List POS_PICKUP = new ArrayList<Double>() {
+    public static final List<Double> POS_PICKUP = new ArrayList<Double>() {
         {
-            add(0d); // left servo
+            add(1d); // left servo
             add(0d); // right servo
             add(0d); // wrist servo
         }
     };
 
-    public static final List POS_MID = new ArrayList<Double>() {
+    public static final List<Double> POS_DROP = new ArrayList<Double>() {
         {
             add(0d); // left servo
-            add(0d); // right servo
-            add(0d); // wrist servo
-        }
-    };
-
-    public static final List POS_DROP = new ArrayList<Double>() {
-        {
-            add(0d); // left servo
-            add(0d); // right servo
-            add(0d); // wrist servo
+            add(1d); // right servo
+            add(1d); // wrist servo
         }
     };
 
@@ -48,9 +40,13 @@ public class Arm {
 
     public void goTo(List pos) {
         try {
-            leftServo.setPosition(pos.indexOf(0));
-            rightServo.setPosition(pos.indexOf(1));
-            wristServo.setPosition(pos.indexOf(2));
+            leftServo.setPosition((double) pos.get(0));
+            rightServo.setPosition((double) pos.get(1));
+            wristServo.setPosition((double) pos.get(2));
+
+            telemetry.addData("Left Servo: ", pos.get(0));
+            telemetry.addData("Right Servo: ", pos.get(1));
+            telemetry.addData("Wrist Servo: ", pos.get(2));
         } catch (Exception exception) {
             throw new RuntimeException("Please use the preset positions");
         }

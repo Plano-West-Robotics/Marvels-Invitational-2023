@@ -137,7 +137,7 @@ public class Drive {
         setVels(x, y, turn, volComp);
 
         if (tm != null) {
-            tm.addData("yaw", getYaw(AngleUnit.DEGREES));
+            //tm.addData("yaw", getYaw(AngleUnit.DEGREES));
         }
     }
 }
