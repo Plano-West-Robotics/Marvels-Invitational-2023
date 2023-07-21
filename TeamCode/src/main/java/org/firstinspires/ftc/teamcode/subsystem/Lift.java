@@ -9,7 +9,6 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.inchworm.PIDController;
 
 public class Lift {
-    public static int currentPos;
     private static boolean manual;
 
     final public static int POS_HIGH = -3010;
@@ -20,24 +19,23 @@ public class Lift {
 
     final public static int DEADZONE = 10;
 
-    public final double Kp = 2;
-    public final double Ki = 0.02;
-    public final double Kd = 0.3;
-    public final double F = 0.03;
+    public final double Kp = 6;
+    public final double Ki = 0;
+    public final double Kd = 0.15;
+    public final double F = 0;
 
-    public static double MAX_VEL = 134.75;
+    public static double MAX_VEL = 1478.9;
     public double power;
 
     public PIDController pid;
-    private DcMotor leftSlide;
+    public DcMotor leftSlide;
     private DcMotor rightSlide;
     private double target;
 
     private Telemetry telemetry;
 
     public Lift(Telemetry telemetry, HardwareMap hw) {
-        pid = new PIDController(Kp, Ki, Kd, currentPos);
-        pid.setTarget(currentPos);
+        pid = new PIDController(Kp, Ki, Kd, target);
 
         leftSlide = hw.get(DcMotor.class, "leftSlide");
         rightSlide = hw.get(DcMotor.class, "rightSlide");
@@ -52,17 +50,20 @@ public class Lift {
 
     void setPower(double power) {
         power /= MAX_VEL;
+        power = Range.clip(power, -1, 1) + F;
+        this.power = power;
+        double currentPos = getCurrentPos();
 
         if (Math.abs(target - currentPos) <= DEADZONE && Math.abs(currentPos) <= DEADZONE) {
             leftSlide.setPower(0);
             rightSlide.setPower(0);
             return;
         }
-        leftSlide.setPower(Range.clip(power, -1, 1) + F);
-        rightSlide.setPower(Range.clip(power, -1, 1) + F);
+        leftSlide.setPower(power);
+        rightSlide.setPower(power);
     }
 
-    void setRawPower(double power) {
+    public void setRawPower(double power) {
         leftSlide.setPower(power);
         rightSlide.setPower(power);
     }
@@ -86,13 +87,15 @@ public class Lift {
         MAX_VEL = maxVel;
     }
 
-    public void update(float stickVal) {
-        currentPos = leftSlide.getCurrentPosition();
+    public int getCurrentPos() {
+        return leftSlide.getCurrentPosition();
+    }
+
+    public void update(double stickVal) {
+        int currentPos = leftSlide.getCurrentPosition();
 
         if (manual) setRawPower(stickVal);
         else setPower(pid.calculate(currentPos));
-
-
 
         telemetry.addData("Slide Manual?", manual);
         telemetry.addData("Slide Power", power);

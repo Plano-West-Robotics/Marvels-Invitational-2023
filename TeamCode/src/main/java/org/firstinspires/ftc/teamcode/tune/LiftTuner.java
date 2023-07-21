@@ -4,14 +4,15 @@ import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.subsystem.Lift;
 
 @Config
 @Autonomous(group="tune")
 public class LiftTuner extends LinearOpMode {
-    public static final double MAX_VEL = 0;
-    public static int HEIGHT = Lift.POS_DOWN;
+    public static double MAX_VEL = 1478.9;
+    public static int HEIGHT = Lift.POS_MID;
     public static double Kp = 0;
     public static double Kd = 0;
     public static double Ki = 0;
@@ -24,6 +25,8 @@ public class LiftTuner extends LinearOpMode {
 
         Lift lift = new Lift(telemetry, hardwareMap);
         lift.setManual(false);
+        lift.leftSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        lift.leftSlide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         Kp = lift.Kp;
         Ki = lift.Ki;
@@ -34,15 +37,11 @@ public class LiftTuner extends LinearOpMode {
 
         waitForStart();
         while (opModeIsActive()) {
-            //double current = inchWorm.tracker.currentPos.theta.angleInDegrees();
-            int current = Lift.currentPos;
+            int current = lift.getCurrentPos();
             lift.setParams(Kp, Ki, Kd, MAX_VEL);
-            /*if (gamepad1.x) {
-                out = 0;
-                controller.reset();
-            }*/
 
             lift.goTo(HEIGHT);
+            lift.update(-1);
 
             telemetry.addData("target", HEIGHT);
             //telemetry.addData("out", out);
@@ -53,8 +52,6 @@ public class LiftTuner extends LinearOpMode {
             telemetry.addData("Kd", String.format("%.2f", Kd));
             telemetry.addData("Power", String.format("%.2f", lift.power));
             telemetry.update();
-
-            lift.update(gamepad1.left_stick_y);
         }
     }
 }

@@ -19,7 +19,7 @@ public class Arm {
         {
             add(1d); // left servo
             add(0d); // right servo
-            add(0d); // wrist servo
+            add(1d); // wrist servo
         }
     };
 
@@ -27,7 +27,7 @@ public class Arm {
         {
             add(0d); // left servo
             add(1d); // right servo
-            add(1d); // wrist servo
+            add(0d); // wrist servo
         }
     };
 

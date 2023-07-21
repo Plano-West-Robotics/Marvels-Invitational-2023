@@ -21,7 +21,7 @@ public class LiftSpeedTuner extends LinearOpMode {
         int numMeasurements = 0;
 
         double time = getRuntime() + 1;
-        leftSlide.setPower(1);
+        leftSlide.setPower(-1);
         while (getRuntime() < time) {
             double velo = leftSlide.getVelocity();
             veloSum += velo;
