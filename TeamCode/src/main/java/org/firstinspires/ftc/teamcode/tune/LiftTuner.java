@@ -10,8 +10,8 @@ import org.firstinspires.ftc.teamcode.subsystem.Lift;
 @Config
 @Autonomous(group="tune")
 public class LiftTuner extends LinearOpMode {
-    public static final double MAX_ANG_VEL = -188;
-    public static int HEIGHT = 10;
+    public static final double MAX_VEL = 0;
+    public static int HEIGHT = Lift.POS_DOWN;
     public static double Kp = 0;
     public static double Kd = 0;
     public static double Ki = 0;
@@ -36,7 +36,7 @@ public class LiftTuner extends LinearOpMode {
         while (opModeIsActive()) {
             //double current = inchWorm.tracker.currentPos.theta.angleInDegrees();
             int current = Lift.currentPos;
-            lift.pid.setParams(Kp, Ki, Kd);
+            lift.setParams(Kp, Ki, Kd, MAX_VEL);
             /*if (gamepad1.x) {
                 out = 0;
                 controller.reset();

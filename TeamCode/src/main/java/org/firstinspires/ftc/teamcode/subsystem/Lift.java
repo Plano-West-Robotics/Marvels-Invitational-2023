@@ -25,7 +25,7 @@ public class Lift {
     public final double Kd = 0.3;
     public final double F = 0.03;
 
-    public static final double MAX_VEL = 134.75;
+    public static double MAX_VEL = 134.75;
     public double power;
 
     public PIDController pid;
@@ -79,6 +79,11 @@ public class Lift {
 
     public void toggleManual() {
         setManual(!Lift.manual);
+    }
+
+    public void setParams(double Kp, double Ki, double Kd, double maxVel) {
+        pid.setParams(Kp, Ki, Kd);
+        MAX_VEL = maxVel;
     }
 
     public void update(float stickVal) {
