@@ -20,10 +20,10 @@ public class TeleOp extends OpMode {
     static class Buttons {
         static final int liftManual = GamepadEx.RIGHT_BUMPER;
         static final int liftPower = GamepadEx.LEFT_STICK_Y;
-        //static final int liftDown = GamepadEx.A;
-        //static final int liftLow = GamepadEx.B;
-        //static final int liftMid = GamepadEx.X;
-        //static final int liftHigh = GamepadEx.Y;
+        static final int liftDown = GamepadEx.A;
+        static final int liftLow = GamepadEx.B;
+        static final int liftMid = GamepadEx.X;
+        static final int liftHigh = GamepadEx.Y;
 
         static final int claw = GamepadEx.A;
 
@@ -53,7 +53,7 @@ public class TeleOp extends OpMode {
 
     @Override
     public void loop() {
-        /*
+
         if (gp2.isPressed(Buttons.liftDown)) {
             lift.goTo(Lift.POS_DOWN);
         } else if (gp2.isPressed(Buttons.liftLow)) {
@@ -62,7 +62,11 @@ public class TeleOp extends OpMode {
             lift.goTo(Lift.POS_MID);
         } else if (gp2.isPressed(Buttons.liftHigh)) {
             lift.goTo(Lift.POS_HIGH);
-        }*/
+        }
+
+        if (gp2.justPressed(Buttons.liftManual)) {
+            lift.toggleManual();
+        }
 
         if (gp2.justPressed(Buttons.claw)) {
             claw.toggle();
