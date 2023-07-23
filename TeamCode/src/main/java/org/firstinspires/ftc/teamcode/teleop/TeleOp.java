@@ -32,12 +32,12 @@ public class TeleOp extends OpMode {
         static final int liftMid = GamepadEx.DPAD_LEFT;
         static final int liftHigh = GamepadEx.DPAD_UP;
 
-        static final int claw = GamepadEx.LEFT_TRIGGER; // kinda arbitrary, may change later
+        static final int claw = GamepadEx.B; // kinda arbitrary, may change later
         //static final int claw = GamepadEx.DPAD_LEFT;
         //static final int armPickup = GamepadEx.DPAD_DOWN;
         //static final int armDrop = GamepadEx.DPAD_UP;
-        static final int armPickup = GamepadEx.Y;
-        static final int armDrop= GamepadEx.A;
+        static final int armPickup = GamepadEx.A;
+        static final int armDrop= GamepadEx.Y;
         //endregion
         //region MainController
         static final int driveX = GamepadEx.LEFT_STICK_X;
