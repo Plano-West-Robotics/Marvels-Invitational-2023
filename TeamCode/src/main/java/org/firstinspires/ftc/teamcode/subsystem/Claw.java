@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class Claw {
-    public static final double POS_OPEN = 0;
+    public static final double POS_OPEN = 0.4;
     public static final double POS_CLOSE = 1;
 
     private Servo clawServo;

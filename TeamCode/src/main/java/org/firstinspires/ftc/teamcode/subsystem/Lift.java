@@ -14,8 +14,8 @@ public class Lift {
     final public static int POS_HIGH = -3010;
     final public static int POS_MID = -2000;
     final public static int POS_LOW = -1350;
-    final public static int POS_DOWN = -5;
-    final public static int MAX_HEIGHT = 100;
+    final public static int POS_DOWN = 0;
+    final public static int MAX_HEIGHT = -1500;
 
     final public static int DEADZONE = 10;
 
@@ -64,6 +64,7 @@ public class Lift {
     }
 
     public void setRawPower(double power) {
+        if (leftSlide.getCurrentPosition() > MAX_HEIGHT && power > 0) return;
         leftSlide.setPower(power);
         rightSlide.setPower(power);
     }

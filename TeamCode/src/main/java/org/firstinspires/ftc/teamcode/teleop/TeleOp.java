@@ -83,7 +83,6 @@ public class TeleOp extends OpMode {
             claw.goTo(Claw.POS_CLOSE);
             arm.goTo(Arm.POS_PICKUP);
         } else if (gp2.isPressed(Buttons.armDrop)) {
-            claw.goTo(Claw.POS_CLOSE);
             arm.goTo(Arm.POS_DROP);
         }
         //endregion
