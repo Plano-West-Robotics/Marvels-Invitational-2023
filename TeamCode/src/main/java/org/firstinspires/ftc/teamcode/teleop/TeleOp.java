@@ -32,7 +32,8 @@ public class TeleOp extends OpMode {
         static final int liftMid = GamepadEx.DPAD_LEFT;
         static final int liftHigh = GamepadEx.DPAD_UP;
 
-        static final int claw = GamepadEx.B; // kinda arbitrary, may change later
+        static final int clawOpen = GamepadEx.B; // kinda arbitrary, may change later
+        static final int clawClose = GamepadEx.X;
         //static final int claw = GamepadEx.DPAD_LEFT;
         //static final int armPickup = GamepadEx.DPAD_DOWN;
         //static final int armDrop = GamepadEx.DPAD_UP;
@@ -81,10 +82,13 @@ public class TeleOp extends OpMode {
         //endregion
 
         //region Arm
-        if (gp2.justPressed(Buttons.claw)) {
+        /*if (gp2.justPressed(Buttons.claw)) {
             claw.toggle();
-        }
-
+        }*/
+        if(gp2.isPressed(Buttons.clawOpen)){
+            claw.goTo(Claw.POS_OPEN);
+        } else if(gp2.isPressed(Buttons.clawClose)){}
+            claw.goTo(Claw.POS_CLOSE);
         if (gp2.isPressed(Buttons.armPickup)) {
             claw.goTo(Claw.POS_CLOSE);
             arm.goTo(Arm.POS_PICKUP);
