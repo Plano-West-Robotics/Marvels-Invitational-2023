@@ -155,14 +155,14 @@ public class InchWorm {
         double a = current.theta.angleInRadians();
         double rotX = outX * Math.cos(a) - outY * Math.sin(a);
         double rotY = outX * Math.sin(a) + outY * Math.cos(a);
-        outX /= MAX_VEL;
-        outY /= MAX_VEL;
+        rotX /= MAX_VEL;
+        rotY /= MAX_VEL;
         outTheta /= MAX_ANG_VEL;
-        opMode.telemetry.addLine("outX: " + outX + System.lineSeparator() + "outY: " + outY + System.lineSeparator() + "outTheta: " + outTheta);
+        opMode.telemetry.addLine("rotX: " + rotX + System.lineSeparator() + "rotY: " + rotY + System.lineSeparator() + "outTheta: " + outTheta);
         opMode.telemetry.update();
 
         double voltageCompensation = 12 / getBatteryVoltage();
-        moveWheels(outX, outY, outTheta, getSpeedMultiplier() * voltageCompensation);
+        moveWheels(rotX, rotY, outTheta, getSpeedMultiplier() * voltageCompensation);
         tracker.update();
 
         return !isBusy(target, current);
