@@ -25,7 +25,7 @@ public class Arm {
 
     public static final List<Double> POS_DROP = new ArrayList<Double>() {
         {
-            add(0d); // left servo
+            add(0.3d); // left servo
             add(0.7d); // right servo
             add(0d); // wrist servo
         }

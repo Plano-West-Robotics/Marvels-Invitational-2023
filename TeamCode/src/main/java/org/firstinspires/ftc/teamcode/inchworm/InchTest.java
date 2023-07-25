@@ -17,10 +17,10 @@ public class InchTest extends LinearOpMode {
 
         wormUtil.waitForStart();
 
-        inchWorm.moveTo(new InchWorm.Pose(Distance.tiles(1), Distance.ZERO));
-        inchWorm.moveTo(new InchWorm.Pose(Distance.tiles(1), Distance.tiles(1)));
-        inchWorm.moveTo(new InchWorm.Pose(Distance.tiles(1), Distance.ZERO));
-        inchWorm.moveTo(new InchWorm.Pose(Distance.ZERO, Distance.ZERO, Angle.degrees(90)));
+        inchWorm.moveTo(new InchWorm.Pose(Distance.ticks(100), Distance.ZERO));
+        inchWorm.moveTo(new InchWorm.Pose(Distance.ticks(200), Distance.ticks(100)));
+        inchWorm.moveTo(new InchWorm.Pose(Distance.ticks(300), Distance.ZERO));
+        inchWorm.moveTo(new InchWorm.Pose(Distance.ZERO, Distance.ZERO));
 
         inchWorm.moveTo(new InchWorm.Pose(Distance.ZERO, Distance.ZERO, Angle.ZERO));
     }

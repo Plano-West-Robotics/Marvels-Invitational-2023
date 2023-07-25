@@ -23,10 +23,6 @@ public class TeleOp extends OpMode {
         //region SecondaryController
         static final int liftManual = GamepadEx.RIGHT_BUMPER;
         static final int liftPower = GamepadEx.LEFT_STICK_Y;
-        /*static final int liftDown = GamepadEx.A;
-        static final int liftLow = GamepadEx.B;
-        static final int liftMid = GamepadEx.X;
-        static final int liftHigh = GamepadEx.Y;*/
         static final int liftDown = GamepadEx.DPAD_DOWN;
         static final int liftLow = GamepadEx.DPAD_RIGHT;
         static final int liftMid = GamepadEx.DPAD_LEFT;
@@ -34,9 +30,6 @@ public class TeleOp extends OpMode {
 
         static final int clawOpen = GamepadEx.B; // kinda arbitrary, may change later
         static final int clawClose = GamepadEx.X;
-        //static final int claw = GamepadEx.DPAD_LEFT;
-        //static final int armPickup = GamepadEx.DPAD_DOWN;
-        //static final int armDrop = GamepadEx.DPAD_UP;
         static final int armPickup = GamepadEx.A;
         static final int armDrop= GamepadEx.Y;
         //endregion
@@ -87,12 +80,14 @@ public class TeleOp extends OpMode {
         }*/
         if(gp2.isPressed(Buttons.clawOpen)){
             claw.goTo(Claw.POS_OPEN);
-        } else if(gp2.isPressed(Buttons.clawClose)){}
+        } else if(gp2.isPressed(Buttons.clawClose)){
             claw.goTo(Claw.POS_CLOSE);
+        }
         if (gp2.isPressed(Buttons.armPickup)) {
             claw.goTo(Claw.POS_CLOSE);
             arm.goTo(Arm.POS_PICKUP);
         } else if (gp2.isPressed(Buttons.armDrop)) {
+            claw.goTo(Claw.POS_CLOSE);
             arm.goTo(Arm.POS_DROP);
         }
         //endregion

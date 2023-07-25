@@ -11,11 +11,11 @@ import org.firstinspires.ftc.teamcode.inchworm.PIDController;
 public class Lift {
     private static boolean manual;
 
-    final public static int POS_HIGH = -3010;
+    final public static int POS_HIGH = -1860;
     final public static int POS_MID = -2000;
     final public static int POS_LOW = -1350;
-    final public static int POS_DOWN = 0;
-    final public static int MAX_HEIGHT = -1500;
+    final public static int POS_DOWN = -6;
+    final public static int MAX_HEIGHT = -1860;
 
     final public static int DEADZONE = 10;
 
@@ -64,12 +64,14 @@ public class Lift {
     }
 
     public void setRawPower(double power) {
-        if (leftSlide.getCurrentPosition() > MAX_HEIGHT && power > 0) return;
+        if (leftSlide.getCurrentPosition() < MAX_HEIGHT && power < 0) return;
         leftSlide.setPower(power);
         rightSlide.setPower(power);
     }
 
     public void goTo(int target) {
+        if (target > POS_DOWN) target = POS_DOWN;
+        if (target < MAX_HEIGHT) target = MAX_HEIGHT;
         this.target = target;
         pid.setTarget(target);
     }
@@ -95,7 +97,10 @@ public class Lift {
     public void update(double stickVal) {
         int currentPos = leftSlide.getCurrentPosition();
 
-        if (manual) setRawPower(stickVal);
+        if (manual) {
+            goTo((int)this.target + 2 * (int)(stickVal * 10));
+            setPower(pid.calculate(currentPos));
+        }
         else setPower(pid.calculate(currentPos));
 
         telemetry.addData("Slide Manual?", manual);
