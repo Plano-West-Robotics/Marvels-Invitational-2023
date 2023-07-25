@@ -37,8 +37,9 @@ public class TurnPIDTuner extends LinearOpMode {
         while (opModeIsActive()) {
             controller.setParams(Kp, Ki, Kd, TARGET);
 
-            double current = inchWorm.tracker.currentPos.theta.angleInDegrees();
-            double out = controller.calculate(current);
+            Angle current = inchWorm.tracker.currentPos.theta;
+            Angle error = Angle.sub(Angle.degrees(TARGET), current);
+            double out = controller.calculateWithError(error.angleInDegrees());
             out /= MAX_ANG_VEL;
 
             if (gamepad1.x) {
@@ -47,12 +48,12 @@ public class TurnPIDTuner extends LinearOpMode {
             }
 
             telemetry.addData("out", out);
-            telemetry.addData("error", String.format("%.2f", TARGET - current));
-            telemetry.addData("current", String.format("%.2f", current));
+            telemetry.addData("error", String.format("%.2f", error.angleInDegrees()));
+            telemetry.addData("current", String.format("%.2f", current.angleInDegrees()));
             telemetry.addData("target", String.format("%.2f", TARGET));
             telemetry.update();
 
-            inchWorm.moveWheels(0, 0, out, 0.5);
+            inchWorm.moveWheels(0, 0, out, 1);
             inchWorm.tracker.update();
         }
     }

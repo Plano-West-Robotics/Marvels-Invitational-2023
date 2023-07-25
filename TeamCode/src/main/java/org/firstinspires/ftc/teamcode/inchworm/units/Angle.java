@@ -47,14 +47,14 @@ public class Angle {
     /**
      * normalizes theta into [0, 2π)
      * @param theta angle to normalize in radians
-     * @return theta normalized into [0, 2π)
+     * @return theta normalized into [-π, π)
      */
     public static Angle modAngle(Angle theta) {
         // convert to degrees because mod 2pi doesn't work?
         double angle = theta.angleInDegrees();
 
-        angle += 360;
-        angle %= 360;
+        while (angle >= 180) angle -= 360;
+        while (angle < 180) angle += 360;
 
         return Angle.degrees(angle);
     }
