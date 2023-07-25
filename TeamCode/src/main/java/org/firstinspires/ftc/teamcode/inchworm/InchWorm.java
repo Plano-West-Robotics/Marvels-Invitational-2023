@@ -56,7 +56,7 @@ public class InchWorm {
     // TODO: tune these coefficients 
     private final PIDController controllerX = new PIDController(3.2, 0, 0.1, 0);
     private final PIDController controllerY = new PIDController(3.2, 0, 0.1, 0);
-    private final PIDController controllerTheta = new PIDController(5, 0, 0, 0);
+    private final PIDController controllerTheta = new PIDController(0, 0, 0, 0);
 
     private final LinearOpMode opMode;
 
