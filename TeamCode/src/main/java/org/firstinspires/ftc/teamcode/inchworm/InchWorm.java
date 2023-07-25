@@ -29,7 +29,7 @@ public class InchWorm {
     public static final RevHubOrientationOnRobot GLOBAL_ORIENTATION = new RevHubOrientationOnRobot(
             // TODO: change these if they are not accurate
             RevHubOrientationOnRobot.LogoFacingDirection.LEFT,
-            RevHubOrientationOnRobot.UsbFacingDirection.BACKWARD);
+            RevHubOrientationOnRobot.UsbFacingDirection.FORWARD);
 
 
     private final DcMotor fl;
@@ -43,12 +43,12 @@ public class InchWorm {
      * Maximum translational velocity in encoder ticks/second. Find this using the SpeedTuner
      */
     // TODO: tune this value
-    private static final double MAX_VEL = 1645.496;
+    private static final double MAX_VEL = 1800;
     /**
      * Maximum angular velocity in degrees/second. Find this using the SpeedTuner.
      */
     // TODO: tune this value
-    private static final double MAX_ANG_VEL = 190.657;
+    private static final double MAX_ANG_VEL = 1900;
     /**
      * PID controllers. <b>coefficients for controllerX and controllerY should be THE SAME!</b>
      * Tune controllerX and controllerY with the TranslationalPIDTuner, and tune controllerTheta with the TurnPIDTuner.

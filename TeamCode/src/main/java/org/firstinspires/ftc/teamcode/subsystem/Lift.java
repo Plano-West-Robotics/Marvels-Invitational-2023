@@ -40,6 +40,9 @@ public class Lift {
         leftSlide = hw.get(DcMotor.class, "leftSlide");
         rightSlide = hw.get(DcMotor.class, "rightSlide");
         //rightSlide.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        leftSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
         leftSlide.setDirection(DcMotorSimple.Direction.REVERSE);
         leftSlide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         leftSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
