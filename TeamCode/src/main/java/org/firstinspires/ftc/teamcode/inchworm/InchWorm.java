@@ -29,7 +29,7 @@ public class InchWorm {
     public static final RevHubOrientationOnRobot GLOBAL_ORIENTATION = new RevHubOrientationOnRobot(
             // TODO: change these if they are not accurate
             RevHubOrientationOnRobot.LogoFacingDirection.LEFT,
-            RevHubOrientationOnRobot.UsbFacingDirection.FORWARD);
+            RevHubOrientationOnRobot.UsbFacingDirection.BACKWARD);
 
 
     private final DcMotor fl;

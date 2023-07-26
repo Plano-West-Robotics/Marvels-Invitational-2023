@@ -106,8 +106,8 @@ public class Drive {
     public void setVels(double x, double y, double turn, double volComp) {
 //        double powerX = x * Math.cos(getYaw()) - y * Math.sin(getYaw());
 //        double powerY = x * Math.sin(getYaw()) + y * Math.cos(getYaw());
-        double powerX = -x;
-        double powerY = -y;
+        double powerX = x;
+        double powerY = y;
 
         double flPower = (powerY - powerX + turn) * speed;
         double frPower = (powerY + powerX - turn) * speed;

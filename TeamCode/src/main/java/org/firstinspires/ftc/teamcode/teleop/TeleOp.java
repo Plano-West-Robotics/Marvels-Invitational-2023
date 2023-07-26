@@ -54,6 +54,8 @@ public class TeleOp extends OpMode {
 
         gp1.update(gamepad1);
         gp2.update(gamepad2);
+
+        drive.setSpeed(0.5);
     }
 
     @Override
