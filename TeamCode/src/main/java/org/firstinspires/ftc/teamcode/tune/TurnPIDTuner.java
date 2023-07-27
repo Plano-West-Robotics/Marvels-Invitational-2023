@@ -48,7 +48,7 @@ public class TurnPIDTuner extends LinearOpMode {
             }
 
             telemetry.addData("out", out);
-            telemetry.addData("error", String.format("%.2f", error.angleInDegrees()));
+            telemetry.addData("error", String.format("%.2f", Angle.modAngle(error).angleInDegrees()));
             telemetry.addData("current", String.format("%.2f", current.angleInDegrees()));
             telemetry.addData("target", String.format("%.2f", TARGET));
             telemetry.update();
