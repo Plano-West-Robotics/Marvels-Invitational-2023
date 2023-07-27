@@ -399,7 +399,7 @@ public class InchWorm {
             int newBL = bl.getCurrentPosition() + blOffset;
             int newBR = br.getCurrentPosition() + brOffset;
 
-            Angle newYaw = Angle.add(getYaw(), yawOffset);
+            Angle newYaw = Angle.modAngle(Angle.add(getYaw(), yawOffset));
             Angle yawDiff = Angle.sub(newYaw, currentPos.theta);
 
             int flDiff = newFL - lastFL;
@@ -416,7 +416,7 @@ public class InchWorm {
             Pose posDiff = new Pose(Distance.ticks(yDiff * expX + xDiff * expY), Distance.ticks(yDiff * expY - xDiff * expX), yawDiff);
             posDiff = posDiff.rot(currentPos.theta.neg());
 
-            currentPos = currentPos.add(posDiff);
+            currentPos = currentPos.add(posDiff).normalizeAngle();
 
             lastFL = newFL;
             lastFR = newFR;
