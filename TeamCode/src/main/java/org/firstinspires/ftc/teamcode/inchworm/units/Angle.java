@@ -50,13 +50,7 @@ public class Angle {
      * @return theta normalized into [-π, π)
      */
     public static Angle modAngle(Angle theta) {
-        // convert to degrees because mod 2pi doesn't work?
-        double angle = theta.angleInDegrees();
-
-        angle += 360;
-        angle %= 360;
-
-        return Angle.degrees(angle);
+        return Angle.sub(theta, ZERO);
     }
 
     /**
@@ -66,8 +60,12 @@ public class Angle {
      * @return smallest difference between the two angles, within range [-π, π)
      */
     public static Angle sub(Angle a, Angle b) {
-        Angle diff = Angle.radians(a.angleInRadians() - b.angleInRadians());
-        return modAngle(diff);
+        double diff = a.angleInDegrees() - b.angleInDegrees();
+
+        while (diff >= 180) diff -= 360;
+        while (diff < -180) diff += 360;
+
+        return Angle.degrees(diff);
     }
 
     /**
