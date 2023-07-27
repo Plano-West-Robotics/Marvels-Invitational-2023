@@ -399,7 +399,7 @@ public class InchWorm {
             int newBL = bl.getCurrentPosition() + blOffset;
             int newBR = br.getCurrentPosition() + brOffset;
 
-            Angle newYaw = Angle.modAngle(Angle.add(getYaw(), yawOffset));
+            Angle newYaw = Angle.modAngle(Angle.add(getYaw(), Angle.ZERO));
             Angle yawDiff = Angle.sub(newYaw, currentPos.theta);
 
             int flDiff = newFL - lastFL;
