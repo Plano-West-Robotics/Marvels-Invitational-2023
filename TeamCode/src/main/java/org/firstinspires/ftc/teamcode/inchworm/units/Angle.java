@@ -50,7 +50,11 @@ public class Angle {
      * @return theta normalized into [-π, π)
      */
     public static Angle modAngle(Angle theta) {
-        return Angle.sub(theta, ZERO);
+        double angle = theta.angleInDegrees();
+        angle %= 360;
+        if (angle >= 180) angle -= 360;
+
+        return Angle.degrees(angle);
     }
 
     /**
@@ -62,10 +66,7 @@ public class Angle {
     public static Angle sub(Angle a, Angle b) {
         double diff = a.angleInDegrees() - b.angleInDegrees();
 
-        while (diff >= 180) diff -= 360;
-        while (diff < -180) diff += 360;
-
-        return Angle.degrees(diff);
+        return modAngle(Angle.degrees(diff));
     }
 
     /**
