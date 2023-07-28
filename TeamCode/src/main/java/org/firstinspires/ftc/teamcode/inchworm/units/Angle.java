@@ -51,8 +51,9 @@ public class Angle {
      */
     public static Angle modAngle(Angle theta) {
         double angle = theta.angleInDegrees();
+
+        angle += 360;
         angle %= 360;
-        if (angle >= 180) angle -= 360;
 
         return Angle.degrees(angle);
     }
@@ -66,7 +67,10 @@ public class Angle {
     public static Angle sub(Angle a, Angle b) {
         double diff = a.angleInDegrees() - b.angleInDegrees();
 
-        return modAngle(Angle.degrees(diff));
+        if (diff >= 180) diff -= 360;
+        if (diff < -180) diff += 360;
+
+        return Angle.degrees(diff);
     }
 
     /**
